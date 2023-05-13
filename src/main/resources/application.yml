@@ -1,0 +1,35 @@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  info:
+    env:
+      enabled: true
+
+info:
+  application:
+    name: hotel-api
+    description: This REST JSON API provides a list of bookable rooms within a hotel.
+    author: Mario G.
+    version: '@project.version@'
+
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        globally_quoted_identifiers: true
+    show-sql: true
