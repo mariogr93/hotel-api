@@ -3,13 +3,17 @@ package com.hotelapi.model.entity;
 
 import com.hotelapi.model.enums.RoomType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "room_types")
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoomTypeEntity {
 
     @Id
