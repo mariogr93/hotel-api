@@ -2,13 +2,17 @@ package com.hotelapi.model.entity;
 
 import com.hotelapi.model.enums.RoomType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "rooms")
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RoomEntity {
 
     @Id
@@ -25,6 +29,9 @@ public class RoomEntity {
     private Integer roomNumber;
     private String hotelRoomCode;
     private Boolean occupancy;
+    @ManyToOne
+    @JoinColumn(name = "hotel")
+    private HotelEntity hotel;
     @ManyToOne
     @JoinColumn(name = "room_type")
     private RoomTypeEntity roomType;
