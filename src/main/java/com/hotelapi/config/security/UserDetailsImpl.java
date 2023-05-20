@@ -1,5 +1,6 @@
 package com.hotelapi.config.security;
 
+import com.hotelapi.model.enums.Gender;
 import com.hotelapi.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,30 +10,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 
-@Entity
-@Table(name = "users")
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@MappedSuperclass
 public class UserDetailsImpl implements UserDetails {
 
-    @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
-    private Integer id;
+
     private String firstName;
     private String lastName;
+    private Integer phoneNumber;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @Enumerated(EnumType.STRING)
     private Role role;
 
