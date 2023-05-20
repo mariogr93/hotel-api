@@ -43,9 +43,11 @@ public class WebSecurityConfig {
 
         http.cors(Customizer.withDefaults())
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated();
+                .authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll()//.anyRequest().authenticated();
                 //.antMatchers().permitAll().anyRequest().authenticated();
                 //.antMatchers("/api/v1/notes/**").hasAnyRole(ADMIN.name()).anyRequest().authenticated();
+                .requestMatchers("/api/v1/test").hasAnyRole("ADMIN").anyRequest().authenticated();
+
         return http.build();
     }
 
