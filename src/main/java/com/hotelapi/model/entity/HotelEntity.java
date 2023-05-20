@@ -30,4 +30,22 @@ public class HotelEntity {
     private String address;
     private String city;
     private String country;
+
+    public HotelEntity(String hotelName, String address, String city, String country) {
+        this.hotelName = hotelName;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "HotelEntity{" +
+                "id=" + id +
+                ", hotelName='" + hotelName + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }
