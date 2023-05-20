@@ -14,6 +14,15 @@ import static com.hotelapi.model.enums.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
+  CLIENT(
+          Set.of(
+                  USER_CREATE,
+                  USER_READ,
+                  USER_UPDATE,
+                  USER_DELETE
+          )
+  ),
+
   USER(
           Set.of(
                   USER_CREATE,
