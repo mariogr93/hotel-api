@@ -1,6 +1,7 @@
 package com.hotelapi.controller;
 
 
+import com.hotelapi.model.request.EmployeeRegisterDTO;
 import com.hotelapi.model.request.UserLoginDTO;
 import com.hotelapi.model.request.UserRegisterDTO;
 import com.hotelapi.model.response.GeneralResponse;
@@ -25,30 +26,59 @@ public class AuthenticationController {
 
     private final AuthenticationService authService;
 
-    @PostMapping("/register")
-    public ResponseEntity<GeneralResponse> registrer(@RequestBody @Valid UserRegisterDTO user) {
+
+//    task: delimitate access with role and permission validations
+
+
+
+    @PostMapping("employee/register")
+    public ResponseEntity<GeneralResponse> registrer(@RequestBody @Valid EmployeeRegisterDTO employee) {
         return ResponseEntity.ok(GeneralResponse.builder()
                         .timeStamp(LocalDateTime.now())
                         .message("User registered succesfuly!")
                         .status(HttpStatus.CREATED)
                         .statusCode(HttpStatus.CREATED.value())
-                        .data(Map.of("user", this.authService.registerUser(user)))
+                        .data(Map.of("user", this.authService.registerEmployee(employee)))
                         .build());
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<GeneralResponse> login(@RequestBody @Valid UserLoginDTO user) {
-        UserLoginResponse authenticatedUser = this.authService.authenticateUser(user);
-
+    @PostMapping("employee/login")
+    public ResponseEntity<GeneralResponse> login(@RequestBody @Valid UserLoginDTO employee) {
+        UserLoginResponse authenticatedEmployee = this.authService.authenticateEmployee(employee);
         return ResponseEntity.ok(
                 GeneralResponse.builder()
                         .message("User logged in")
-                        .data(Map.of("user", authenticatedUser))
+                        .data(Map.of("user", authenticatedEmployee))
                         .statusCode(HttpStatus.FOUND.value())
                         .status(HttpStatus.FOUND)
                         .timeStamp(LocalDateTime.now())
                         .build()
         );
     }
+//    @PostMapping("register")
+//    public ResponseEntity<GeneralResponse> registrer(@RequestBody @Valid UserRegisterDTO user) {
+//        return ResponseEntity.ok(GeneralResponse.builder()
+//                .timeStamp(LocalDateTime.now())
+//                .message("User registered succesfuly!")
+//                .status(HttpStatus.CREATED)
+//                .statusCode(HttpStatus.CREATED.value())
+//                .data(Map.of("user", this.authService.registerUser(user)))
+//                .build());
+//    }
+//
+//    @PostMapping("login")
+//    public ResponseEntity<GeneralResponse> login(@RequestBody @Valid UserLoginDTO user) {
+//        UserLoginResponse authenticatedUser = this.authService.authenticateUser(user);
+//
+//        return ResponseEntity.ok(
+//                GeneralResponse.builder()
+//                        .message("User logged in")
+//                        .data(Map.of("user", authenticatedUser))
+//                        .statusCode(HttpStatus.FOUND.value())
+//                        .status(HttpStatus.FOUND)
+//                        .timeStamp(LocalDateTime.now())
+//                        .build()
+//        );
+//    }
 
 }
