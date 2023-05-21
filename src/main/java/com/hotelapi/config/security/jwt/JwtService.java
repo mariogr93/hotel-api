@@ -9,17 +9,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import static com.hotelapi.config.security.jwt.JwtConstants.JWT_EXPIRATION;
+import static com.hotelapi.config.security.jwt.JwtConstants.JWT_SECRET;
 @Service
 public class JwtService {
     public String generateToken(UserDetailsImpl userDetails){
         Date currentDate = new Date();
-        Date expiredDate = new Date(currentDate.getTime() + JwtConstants.JWT_EXPIRATION);
+        Date expiredDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
+
         String newToken = Jwts.builder()
                 .setIssuer(userDetails.getUsername())
-                .setSubject(String.format("%s,%s", userDetails.getId(), userDetails.getUsername()))
+                .claim("roles", userDetails.getRole())
+                .setSubject(String.format("%s,%s", userDetails.getRole(), userDetails.getUsername()))
                 .setIssuedAt(currentDate)
                 .setExpiration(expiredDate)
-                .signWith(SignatureAlgorithm.HS256, JwtConstants.JWT_SECRET)
+                .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
                 .compact();
         return newToken;
     }
@@ -38,6 +42,11 @@ public class JwtService {
         return userEmail;
     }
 
+    public String getTokenRole(String token){
+        String role = getJwtClaims(token).getSubject().split(",")[0];
+        return role;
+    }
+
     private Date getTokenExpiration(String token){
         Date expDate = getJwtClaims(token).getExpiration();
         return expDate;
@@ -50,7 +59,7 @@ public class JwtService {
 
     private Claims getJwtClaims(String token) throws AuthenticationCredentialsNotFoundException {
         try {
-            return Jwts.parser().setSigningKey(JwtConstants.JWT_SECRET).parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody();
         } catch (Exception exception) {
             throw new AuthenticationCredentialsNotFoundException("JWT WAS EXPIRED OR INCORRECT");
         }
