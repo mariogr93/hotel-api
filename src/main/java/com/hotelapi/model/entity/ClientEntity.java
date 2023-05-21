@@ -28,16 +28,7 @@ public class ClientEntity extends UserDetailsImpl {
             generator = "client_sequence"
     )
     private Integer id;
-//    private String firstName;
-//    private String lastName;
-//    private Integer phoneNumber;
-//    private String email;
-//    private String password;
     private String passportNumber;
-//    @Enumerated(EnumType.STRING)
-//    private Gender gender;
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
     @ManyToOne
     @JoinColumn(name ="booking")
     private BookingEntity booking;
@@ -49,5 +40,14 @@ public class ClientEntity extends UserDetailsImpl {
         this.booking = booking;
     }
 
+    public ClientEntity(String firstName, String lastName, Integer phoneNumber, String email, String password, String passportNumber, Gender gender, Role role, BookingEntity booking) {
+        super(firstName, lastName, phoneNumber, email, password, gender, role);
+        this.passportNumber = passportNumber;
+        this.booking = booking;
+    }
 
+    public ClientEntity(String firstName, String lastName, Integer phoneNumber, String email, String password, String passportNumber, Gender gender, Role role) {
+        super(firstName, lastName, phoneNumber, email, password, gender, role);
+        this.passportNumber = passportNumber;
+    }
 }
