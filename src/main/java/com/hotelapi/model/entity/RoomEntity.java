@@ -35,4 +35,24 @@ public class RoomEntity {
     @ManyToOne
     @JoinColumn(name = "room_type")
     private RoomTypeEntity roomType;
+
+    public RoomEntity(Integer roomNumber, String hotelRoomCode, Boolean occupancy, HotelEntity hotel, RoomTypeEntity roomType) {
+        this.roomNumber = roomNumber;
+        this.hotelRoomCode = hotelRoomCode;
+        this.occupancy = occupancy;
+        this.hotel = hotel;
+        this.roomType = roomType;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomEntity{" +
+                "id=" + id +
+                ", roomNumber=" + roomNumber +
+                ", hotelRoomCode='" + hotelRoomCode + '\'' +
+                ", occupancy=" + occupancy +
+                ", hotel=" + hotel +
+                ", roomType=" + roomType +
+                '}';
+    }
 }

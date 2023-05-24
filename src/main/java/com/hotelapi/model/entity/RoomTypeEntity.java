@@ -32,4 +32,19 @@ public class RoomTypeEntity {
     private Integer roomPrice;
     private Integer roomCapacity;
 
+    public RoomTypeEntity(RoomType roomType, Integer roomPrice, Integer roomCapacity) {
+        this.roomType = roomType;
+        this.roomPrice = roomPrice;
+        this.roomCapacity = roomCapacity;
+    }
+
+    @Override
+    public String toString() {
+        return "RoomTypeEntity{" +
+                "id=" + id +
+                ", roomType=" + roomType +
+                ", roomPrice=" + roomPrice +
+                ", roomCapacity=" + roomCapacity +
+                '}';
+    }
 }
