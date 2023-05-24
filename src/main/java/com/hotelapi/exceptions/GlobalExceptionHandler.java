@@ -4,6 +4,7 @@ package com.hotelapi.exceptions;
 import com.hotelapi.model.response.GeneralResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
@@ -26,8 +27,20 @@ public class GlobalExceptionHandler {
                 .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
         return ResponseEntity.badRequest().body(
                 GeneralResponse.builder()
-                        .message(ex.getMessage())
+                        //.message(ex.getMessage())
                         .error( errors)
+                        .timeStamp(LocalDateTime.now())
+                        .status(HttpStatus.BAD_REQUEST)
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .build());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<GeneralResponse> handleMessageNotReadableException(HttpMessageNotReadableException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(GeneralResponse.builder()
+                        .message(exception.getMessage().split(":")[1])
                         .timeStamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST)
                         .statusCode(HttpStatus.BAD_REQUEST.value())
