@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table
+@Table(name = "bookings")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -32,10 +32,10 @@ public class BookingEntity {
     private Integer numberOfAdults;
     private Integer numberOfChildren;
 
+    @ManyToOne
+    @JoinColumn(name = "client")
+    private ClientEntity clientEntity;
 
-
-//    create guest entity
-    private String guest;
     @ManyToOne
     @JoinColumn(name = "room")
     private RoomEntity roomEntity;
@@ -44,4 +44,14 @@ public class BookingEntity {
     @JoinColumn(name ="hotel")
     private HotelEntity hotel;
 
+    public BookingEntity(String date, String arraivalDate, String departureDate, Integer numberOfAdults, Integer numberOfChildren,ClientEntity clientEntity, RoomEntity roomEntity, HotelEntity hotel) {
+        this.date = date;
+        this.arraivalDate = arraivalDate;
+        this.departureDate = departureDate;
+        this.numberOfAdults = numberOfAdults;
+        this.numberOfChildren = numberOfChildren;
+        this.clientEntity = clientEntity;
+        this.roomEntity = roomEntity;
+        this.hotel = hotel;
+    }
 }
