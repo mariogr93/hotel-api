@@ -33,15 +33,15 @@ public class BookingEntity {
     private Integer numberOfChildren;
 
     @ManyToOne
-    @JoinColumn(name = "client")
+    @JoinColumn(name = "client_id")
     private ClientEntity clientEntity;
 
     @ManyToOne
-    @JoinColumn(name = "room")
+    @JoinColumn(name = "room_id")
     private RoomEntity roomEntity;
 
     @ManyToOne
-    @JoinColumn(name ="hotel")
+    @JoinColumn(name ="hotel_id")
     private HotelEntity hotel;
 
     public BookingEntity(String date, String arraivalDate, String departureDate, Integer numberOfAdults, Integer numberOfChildren,ClientEntity clientEntity, RoomEntity roomEntity, HotelEntity hotel) {
