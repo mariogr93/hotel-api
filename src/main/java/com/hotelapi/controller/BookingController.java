@@ -27,13 +27,8 @@ public class BookingController {
         // <--------------------------------------->
         // TO DO:CREATE BILL ENTITY...
         // <--------------------------------------->
-
         // <--------------------------------------->
-        // TO DO:VALIDATE IF BOOKING CAN BE DONE WITHOUT USER (IT SHOULD NOT)...
-        // <--------------------------------------->
-
-        // <--------------------------------------->
-        // TO DO:MAP VALUES ON A BOOKING REPONSE OBJECT TO JUST RETURN MAIN DATA....MUST BE CAREFULL WITH CLIENT DATA...
+        // TO DO:VALIDATE DATES AVAILABLES FOR BOOKING...
         // <--------------------------------------->
 
 
@@ -54,6 +49,17 @@ public class BookingController {
                 .status(HttpStatus.CREATED)
                 .statusCode(HttpStatus.CREATED.value())
                 .data(Map.of("bookings", this.bookingService.getAllBookings() ))
+                .build());
+    }
+
+    @GetMapping(path = "/client/{id}")
+    public ResponseEntity<GeneralResponse> getAllBookingsByClientId(@PathVariable Integer id){
+        return ResponseEntity.ok(GeneralResponse.builder()
+                .timeStamp(LocalDateTime.now())
+                .message("Bookings found!")
+                .status(HttpStatus.FOUND)
+                .statusCode(HttpStatus.FOUND.value())
+                .data(Map.of("bookings", this.bookingService.getAllBookingsByClientId(id) ))
                 .build());
     }
 }
