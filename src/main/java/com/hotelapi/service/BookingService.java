@@ -23,4 +23,10 @@ public class BookingService {
 
         return this.bookingRepository.findAll();
     }
+
+    public List<BookingEntity> getAllBookingsByClientId(Integer id) {
+
+
+       return this.bookingRepository.findAllByClientId(id);
+    }
 }
