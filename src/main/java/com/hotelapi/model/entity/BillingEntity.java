@@ -8,13 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "bills")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BillEntity {
+public class BillingEntity {
 
     @Id
     @SequenceGenerator(
@@ -30,11 +32,9 @@ public class BillEntity {
     private Integer roomCharge;
     private Integer restaurantCharge;
     private Integer barCharge;
-
-    private String paymentDate;
-    private String arraivalDate;
+    private LocalDateTime paymentDate;
+    private String arrivalDate;
     private String departureDate;
-
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
@@ -47,6 +47,17 @@ public class BillEntity {
     @JoinColumn
     private BookingEntity booking;
 
+    public BillingEntity(Integer roomCharge, Integer restaurantCharge, Integer barCharge, LocalDateTime paymentDate, PaymentMethod paymentMethod, String arrivalDate, String departureDate, ClientEntity client, BookingEntity booking) {
+        this.roomCharge = roomCharge;
+        this.restaurantCharge = restaurantCharge;
+        this.barCharge = barCharge;
+        this.paymentDate = paymentDate;
+        this.paymentMethod = paymentMethod;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+        this.client = client;
+        this.booking = booking;
+    }
 
 }
 
