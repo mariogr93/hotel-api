@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<BookingEntity, Integer> {
 
+    Optional<BookingEntity> findById(Integer bookingId);
     @Query("""
     Select n from BookingEntity n inner join ClientEntity u on n.clientEntity.id = u.id where u.id = :clientId
     """)
