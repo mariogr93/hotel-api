@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,19 +20,26 @@ public class ImageService {
 
     public String uploadImage(MultipartFile file) throws IOException {
 
-        ImageEntity imageData = imageRepository.save(ImageEntity.builder()
+        ImageEntity img = ImageEntity.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
-                .imageData(ImageUtils.compressImage(file.getBytes())).build());
+                .imageData(ImageUtils.compressImage(file.getBytes())).build();
+        System.out.println(img.toString());
+        ImageEntity imageData = imageRepository.save(img);
         if (imageData != null) {
             return "file uploaded successfully : " + file.getOriginalFilename();
         }
         return null;
     }
 
-    public byte[] downloadImage(String fileName){
-        Optional<ImageEntity> dbImageData = imageRepository.findByName(fileName);
-        byte[] images=ImageUtils.decompressImage(dbImageData.get().getImageData());
+    public byte[] downloadImage(){
+        System.out.println("before downloadImage dbImageData fileName-------------" );
+
+        List<ImageEntity> dbImageData = imageRepository.findAll();
+        System.out.println(dbImageData);
+        Optional<ImageEntity> img = imageRepository.findByName("warning.png");
+        System.out.println("after downloadImage dbImageData-------------" + img.get().toString());
+        byte[] images = ImageUtils.decompressImage(dbImageData.get(0).getImageData());
         return images;
     }
 }

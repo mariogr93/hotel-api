@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 @Entity
 @Table(name = "ImageData")
 @Data
@@ -17,13 +19,13 @@ public class ImageEntity {
 
         @Id
         @SequenceGenerator(
-                name = "hotel_sequence",
-                sequenceName = "hotel_sequence",
+                name = "img_sequence",
+                sequenceName = "img_sequence",
                 allocationSize = 1
         )
         @GeneratedValue(
                 strategy = GenerationType.SEQUENCE,
-                generator = "hotel_sequence"
+                generator = "img_sequence"
         )
         private Integer id;
 
@@ -33,4 +35,13 @@ public class ImageEntity {
         @Column(name = "imagedata",length = 1000)
         private byte[] imageData;
 
+
+        @Override
+        public String toString() {
+                return "ImageEntity{" +
+                        "name='" + name + '\'' +
+                        ", type='" + type + '\'' +
+                        ", imageData=" + Arrays.toString(imageData) +
+                        '}';
+        }
 }

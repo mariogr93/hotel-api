@@ -1,22 +1,25 @@
 package com.hotelapi.controller;
 
 
+import com.hotelapi.model.entity.ImageEntity;
 import com.hotelapi.model.request.ClientRegisterDTO;
 import com.hotelapi.model.request.EmployeeRegisterDTO;
 import com.hotelapi.model.request.UserLoginDTO;
 import com.hotelapi.model.response.GeneralResponse;
 import com.hotelapi.model.response.UserLoginResponse;
 import com.hotelapi.service.AuthenticationService;
+import com.hotelapi.service.ImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,11 +28,26 @@ import java.util.Map;
 public class AuthenticationController {
 
     private final AuthenticationService authService;
-
+    private final ImageService imgService;
 
 //    task: delimitate access with role and permission validations
 
+    @PostMapping("img")
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
+        String uploadImage = imgService.uploadImage(file);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadImage);
+    }
 
+    @GetMapping("img")
+    public ResponseEntity<?> downloadImage(){
+        System.out.println("------------------downloadImage");
+        byte[] imageData = imgService.downloadImage();
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/png"))
+                .body(imageData);
+
+    }
 
     @PostMapping("employee/register")
     public ResponseEntity<GeneralResponse> registrer(@RequestBody @Valid EmployeeRegisterDTO employee) {
