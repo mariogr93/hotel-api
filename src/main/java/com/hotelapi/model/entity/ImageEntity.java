@@ -35,6 +35,16 @@ public class ImageEntity {
         @Column(name = "imagedata",length = 1000)
         private byte[] imageData;
 
+        @ManyToOne
+        @JoinColumn(name = "room")
+        private RoomEntity roomEntity;
+
+        public ImageEntity(String name, String type, byte[] imageData, RoomEntity roomEntity) {
+                this.name = name;
+                this.type = type;
+                this.imageData = imageData;
+                this.roomEntity = roomEntity;
+        }
 
         @Override
         public String toString() {
