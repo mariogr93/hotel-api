@@ -39,10 +39,9 @@ public class AuthenticationController {
                 .body(uploadImage);
     }
 
-    @GetMapping("img")
-    public ResponseEntity<?> downloadImage(){
-        System.out.println("------------------downloadImage");
-        byte[] imageData = imgService.downloadImage();
+    @GetMapping("img/{roomid}")
+    public ResponseEntity<?> downloadImage(@PathVariable Integer roomid){
+        byte[] imageData = imgService.downloadAllRoomImages(roomid);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);

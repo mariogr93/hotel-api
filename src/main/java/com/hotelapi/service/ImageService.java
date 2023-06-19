@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,14 +33,21 @@ public class ImageService {
         return null;
     }
 
-    public byte[] downloadImage(){
+    public byte[] downloadAllRoomImages(Integer roomId){
         System.out.println("before downloadImage dbImageData fileName-------------" );
 
-        List<ImageEntity> dbImageData = imageRepository.findAll();
-        System.out.println(dbImageData);
-        Optional<ImageEntity> img = imageRepository.findByName("warning.png");
-        System.out.println("after downloadImage dbImageData-------------" + img.get().toString());
+        List<ImageEntity> dbImageData = imageRepository.findAllByRoomId(roomId);
+//        Optional<ImageEntity> img = imageRepository.findByName("warning.png");
+
+        List<byte[]> images2 = new ArrayList<>();
+
+        for (ImageEntity img : dbImageData) {
+            images2.add(ImageUtils.decompressImage(img.getImageData()));
+        }
+
         byte[] images = ImageUtils.decompressImage(dbImageData.get(0).getImageData());
+//        byte[] images = ImageUtils.decompressImage(img.get().getImageData());
+
         return images;
     }
 }
