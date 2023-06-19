@@ -13,7 +13,7 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Integer>
 
     Optional<BookingEntity> findById(Integer bookingId);
     @Query("""
-    Select n from BookingEntity n inner join ClientEntity u on n.clientEntity.id = u.id where u.id = :clientId
+    Select b from BookingEntity b inner join ClientEntity c on b.clientEntity.id = c.id where c.id = :clientId
     """)
     ArrayList<BookingEntity> findAllByClientId(Integer clientId);
 }
